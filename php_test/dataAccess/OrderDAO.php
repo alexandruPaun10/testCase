@@ -34,13 +34,17 @@ class orderDAO
         {
             $this->open_db();
             $query=$this->condb->prepare("INSERT INTO `order` (cId,purchase_Date,country,device) VALUES (?, ?, ?,?)");
-            $query->bind_param("ss",$obj->cId,$obj->purchase_Date,$obj->country,$obj->device);
+            $query->bind_param("ssss",$obj->cId,$obj->purchase_Date,$obj->country,$obj->device);
             $query->execute();
             $res= $query->get_result();
-            $last_id=$this->condb->insert_id;
+            $oId=$this->condb->insert_id;
+            $query2=$this->condb->prepare("INSERT INTO order_Items (oId,EAN,quantity,price) VALUES (?,?,?,?)");
+            $query2->bind_param("ssss",$oId,$obj->EAN,$obj->quantity,$obj->price);
+            $query2->execute();
             $query->close();
+            $query2->close();
             $this->close_db();
-            return $last_id;
+            return $oId;
         }
         catch (Exception $error)
         {

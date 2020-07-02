@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <a href="index.php" class="btn btn-success pull-left">Home</a>
+                        <a href="view/insertOrder.php" class="btn btn-success pull-right">Add Order</a>
                         <h2 class="pull-left">Orders</h2>
                     </div>
                     <?php

@@ -36,7 +36,6 @@
                         <h2 class="pull-left">Customers Details</h2>
                         <a href="view/insert.php" class="btn btn-success pull-right">Add New Customers</a>
                         <a href="view/graph.php" class="btn btn-success pull-right">See Graph</a>
-                        <a href="view/insertOrder.php" class="btn btn-success pull-right">Add Order</a>
                     </div>
                     <?php
                         if($result->num_rows > 0){
