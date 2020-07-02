@@ -29,8 +29,6 @@
                 case 'delete' :
                     $this->delete();
                     break;
-                case 'addOrder' :
-                    $this->addOrder();
                 default:
                     $this->list();
             }
@@ -112,7 +110,6 @@
                 throw $e;
             }
         }
-
         // update record
         public function update()
         {

@@ -36,6 +36,7 @@
                         <h2 class="pull-left">Customers Details</h2>
                         <a href="view/insert.php" class="btn btn-success pull-right">Add New Customers</a>
                         <a href="view/graph.php" class="btn btn-success pull-right">See Graph</a>
+                        <a href="view/insertOrder.php" class="btn btn-success pull-right">Add Order</a>
                     </div>
                     <?php
                         if($result->num_rows > 0){
@@ -60,7 +61,7 @@
                                         echo "<a href='index.php?act=delete&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><i class='fa fa-trash'></i></a>";
                                         // Here should redirect to the add method from order controller, instead it deletes the customer,
                                         // the problem is with act=delete&id, dont know how to refer to the act in the order controller + maybe have a better icon for new order
-                                        echo "<a href='index.php?act=insert". $row['id'] ."' title='Add Order' data-toggle='tooltip'><i class='fa fa-first-order'></i></a>";
+                                        echo "<a href='index.php?act=getOrders&id=" . $row['id'] ."' title='See Orders' data-toggle='tooltip' inputmode=''><i class='fa fa-first-order'></i></a>";
                                         echo "</td>";
                                     echo "</tr>";
                                 }

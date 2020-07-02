@@ -18,8 +18,6 @@
             // Check connection
             if ($this->condb->connect_error) {
                 die("Connection failed: " . $this->condb->connect_error);
-            } else {
-                echo "Connection succesful: " . $this->condb->get_server_info();
             }
             return $this->condb;
 		}

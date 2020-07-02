@@ -18,8 +18,6 @@ class orderDAO
         // Check connection
         if ($this->condb->connect_error) {
             die("Connection failed: " . $this->condb->connect_error);
-        } else {
-            echo "Connection succesful: " . $this->condb->get_server_info();
         }
     }
 
@@ -100,7 +98,12 @@ class orderDAO
             $this->open_db();
             if($id>0)
             {
-                $query=$this->condb->prepare("SELECT * FROM `order` WHERE id=?");
+                $query=$this->condb->prepare("SELECT `order`.id,`order`.purchase_Date,`order`.country,`order`.device, 
+                                                order_Items.EAN, order_Items.quantity, order_Items.price
+                                                FROM   `order`
+                                                LEFT JOIN order_Items
+                                                ON `order`.id = order_Items.oId
+                                                WHERE `order`.cId=?");
                 $query->bind_param("i",$id);
             }
             else

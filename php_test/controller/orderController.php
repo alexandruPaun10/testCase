@@ -18,17 +18,17 @@ class orderController
         $act = isset($_GET['act']) ? $_GET['act'] : NULL;
         switch ($act)
         {
-            case 'add' :
-                $this->insert();
+            case 'insertOrder' :
+                $this->insertOrder();
                 break;
-            case 'update':
-                $this->update();
+            case 'updateOrder':
+                $this->updateOrder();
                 break;
-            case 'delete' :
-                $this -> delete();
+            case 'deleteOrder' :
+                $this -> deleteOrder();
                 break;
-            default:
-                $this->list();
+            case 'getOrders' :
+                $this ->listOrder();
         }
     }
     // page redirection
@@ -66,52 +66,48 @@ class orderController
     }
 
     // add new record
-    public function insert()
+    public function insertOrder()
     {
-        try{
-            $orderTbl =new order();
-            if (isset($HTTP_POST_VARS['addbtn']))
-            {
-                // read form value
-                $orderTbl->purchase_Date = trim($HTTP_POST_VARS['purchase_Date']);
-                $orderTbl->country = trim($HTTP_POST_VARS['country']);
-                $orderTbl->device = trim($HTTP_POST_VARS['device']);
+        try {
+            $orderTbl = new order();
+            if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
 
-                //call validation
-                $chk=$this->checkValidation($orderTbl);
-                if($chk)
-                {
+                $orderTbl->purchase_Date = trim($_POST['purchase_Date']);
+                $orderTbl->device = trim($_POST['purchase_Date']);
+                $orderTbl->cId = $_GET["id"];
+
+                $chk = $this->checkValidation($orderTbl);
+                if ($chk) {
                     //call insert record
-                    $pid = $this -> objsm ->insertRecord($orderTbl);
-                    if($pid>0){
+                    $pid = $this->objsm->insertRecord($orderTbl);
+                    if ($pid > 0) {
                         $this->list();
-                    }else{
+                    } else {
                         echo "Somthing is wrong..., try again.";
                     }
-                }else
-                {
-                    $_SESSION['orderTbl0']=serialize($orderTbl);//add session obj
+                    $this->pageRedirect('view/update.php');
+                } else {
+                    $_SESSION['orderTbl0'] = serialize($orderTbl);//add session obj
                     $this->pageRedirect("view/insertOrder.php");
                 }
             }
-        }catch (Exception $error)
-        {
+        } catch (Exception $e) {
+            throw $e;
             $this->close_db();
-            throw $error;
         }
     }
     // update record
-    public function update()
+    public function updateOrder()
     {
         try
         {
 
-            if (isset($HTTP_POST_VARS['updatebtn']))
+            if (isset($_POST['updatebtn']))
             {
                 $orderTbl=unserialize($_SESSION['orderTbl0']);
-                $orderTbl->purchase_Date = trim($HTTP_POST_VARS['purchase_Date']);
-                $orderTbl->country = trim($HTTP_POST_VARS['country']);
-                $orderTbl->device = trim($HTTP_POST_VARS['device']);
+                $orderTbl->purchase_Date = trim($_POST['purchase_Date']);
+                $orderTbl->country = trim($_POST['country']);
+                $orderTbl->device = trim($_POST['device']);
 
                 // check validation
                 $chk=$this->checkValidation($orderTbl);
@@ -128,8 +124,8 @@ class orderController
                     $_SESSION['customertbl0']=serialize($orderTbl);
                     $this->pageRedirect("view/updateOrder.php");
                 }
-            }elseif(isset($HTTP_GET_VARS["id"]) && !empty(trim($HTTP_GET_VARS["id"]))){
-                $id=$HTTP_GET_VARS['id'];
+            }elseif(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
+                $id=$_GET['id'];
                 $result=$this->objsm->selectRecord($id);
                 $row=mysqli_fetch_array($result);
                 $orderTbl=new order();
@@ -151,7 +147,7 @@ class orderController
         }
     }
     // delete record
-    public function delete()
+    public function deleteOrder()
     {
         try
         {
@@ -174,8 +170,18 @@ class orderController
             throw $error;
         }
     }
-    public function list(){
-        $result=$this->objsm->selectRecord(0);
+    public function listOrder()
+    {
+        try {
+            if (isset($_GET['id'])) {
+                $cId = $_GET['id'];
+                $result = $this->objsm->selectRecord($cId);
+            } else {
+                echo "Invalid operation.";
+            }
+        } catch (Exception $error) {
+            throw $error;
+        }
         include "view/listOrder.php";
     }
 }
