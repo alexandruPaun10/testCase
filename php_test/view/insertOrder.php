@@ -115,30 +115,22 @@
     <div class="container-fluid pt-4">
         <div class="row">
             <div class="col-xl-8">
-
                     <div class="page-header">
                     </div>
                     <p>Please fill this form and submit to add new order record in the database.</p>
-                    <form action="../index.php?act=insertOrder" method="post" >
-                        TODO: Make date selector
-                        <div class="form-control-label"<?php echo (!empty($orderTbl->purchase_Date_msg)) ? 'has-error' : ''; ?>>
-                            <label>Purchase Date</label>
-                            <input type="text" name="purchase_Date" class="form-control" value="<?php echo $orderTbl->purchase_Date; ?>">
-                            <span class="help-block"><?php echo $orderTbl->purchase_Date_msg;?></span>
-                        </div>
-                        TODO: Fetch location automatically
+                    <form action="../index.php?act=insertOrder&id=<?php echo$_GET['id']?>" method="post" >
                         <div class="form-control-label" <?php echo (!empty($orderTbl->country_msg)) ? 'has-error' : ''; ?>>
                             <label>Country</label>
                             <input name="country" class="form-control" value="<?php echo $orderTbl->country; ?>">
                             <span class="help-block"><?php echo $orderTbl->country_msg;?></span>
                         </div>
-                        TODO: Fetch device automatically
+
                         <div class="form-control-label" <?php echo (!empty($orderTbl->device_msg)) ? 'has-error' : ''; ?>>
                             <label>Device</label>
                             <input name="device" class="form-control" value="<?php echo $orderTbl->device; ?>">
                             <span class="help-block"><?php echo $orderTbl->device_msg;?></span>
                         </div>
-                        TODO: Have to make product and fetch as a list
+
                         <div class="form-control-label" <?php echo (!empty($orderTbl->EAN_msg)) ? 'has-error' : ''; ?>>
                             <label>EAN</label>
                             <input name="EAN" class="form-control" value="<?php echo $orderTbl->EAN; ?>">
@@ -149,15 +141,16 @@
                             <input name="quantity" class="form-control" value="<?php echo $orderTbl->quantity; ?>">
                             <span class="help-block"><?php echo $orderTbl->quantity_msg;?></span>
                         </div>
-                        TODO: Calculate price automatically
+
                         <div class="form-control-label" <?php echo (!empty($orderTbl->price_msg)) ? 'has-error' : ''; ?>>
-                            <label>Customer email</label>
+                            <label>Price</label>
                             <input name="price" class="form-control" value="<?php echo $orderTbl->price; ?>">
                             <span class="help-block"><?php echo $orderTbl->price_msg;?></span>
                         </div>
                         <br/>
                         <input type="submit" name="addbtn" class="btn btn-primary" value="Submit">
                         <a href="../index.php" class="btn btn-default">Cancel</a>
+
                     </form>
 
       </div>

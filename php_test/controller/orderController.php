@@ -29,6 +29,9 @@ class orderController
                 break;
             case 'getOrders' :
                 $this ->listOrder();
+                break;
+            default:
+                throw new \Exception('Unexpected value');
         }
     }
     // page redirection
@@ -40,19 +43,6 @@ class orderController
     public function checkValidation($orderTbl)
     {    $noerror=true;
 
-        // Validate purchase Date
-        if(empty($orderTbl->purchase_Date)){
-            $orderTbl->purchase_Date_msg = "Field is empty.";$noerror=false;
-        } elseif(!filter_var($orderTbl->purchase_Date, FILTER_VALIDATE_DATE, array("options"=>array("regexp"=>"~^\d{2}/\d{2}/\d{4}$~")))){
-            $orderTbl->purchase_Date_msg = "Invalid entry.";$noerror=false;
-        }else{$orderTbl->purchase_Date_msg ="";}
-
-        // Validate device
-        if(empty($orderTbl->device)){
-            $orderTbl->device_msg = "Field is empty.";$noerror=false;
-        } elseif(!filter_var($orderTbl->device_msg, FILTER_VALIDATE_EMAIL)){
-            $orderTbl->device_msg = "Invalid entry.";$noerror=false;
-        }else{$orderTbl->device_msg ="";}
 
         // Validate country
         if(empty($orderTbl->country)){
@@ -62,39 +52,46 @@ class orderController
         }else{$orderTbl->country_msg ="";}
         return $noerror;
 
-
     }
 
     // add new record
     public function insertOrder()
     {
         try {
-            $orderTbl = new order();
-            if (isset($_GET["id"]) && !empty(trim($_GET["id"]))) {
+            $orderTbl = new orderDTO();
 
-                $orderTbl->purchase_Date = trim($_POST['purchase_Date']);
-                $orderTbl->device = trim($_POST['purchase_Date']);
-                $orderTbl->cId = $_GET["id"];
+                if (isset($_POST['addbtn'])) {
 
-                $chk = $this->checkValidation($orderTbl);
-                if ($chk) {
-                    //call insert record
-                    $pid = $this->objsm->insertRecord($orderTbl);
-                    if ($pid > 0) {
-                        $this->list();
+                    $orderTbl->cId = $_GET['id'];
+                    $orderTbl->country = trim($_POST['country']);
+                    $orderTbl->device = trim($_POST['device']);
+                    $orderTbl->EAN = trim($_POST['EAN']);
+                    $orderTbl->quantity = trim($_POST['quantity']);
+                    $orderTbl->price = trim($_POST['price']);
+                    $chk = $this->checkValidation($orderTbl);
+                    if ($chk) {
+                        //call insert record
+                        $pid = $this->objsm->insertRecord($orderTbl);
+                        if ($pid > 0) {
+                            $this->listOrder();
+                        } else {
+                            echo "Somthing is wrong..., try again.";
+                        }
                     } else {
-                        echo "Somthing is wrong..., try again.";
+                        $_SESSION['orderTbl0'] = serialize($orderTbl);//add session obj
+                        $this->pageRedirect("view/insertOrder.php");
                     }
-                    $this->pageRedirect('view/update.php');
-                } else {
-                    $_SESSION['orderTbl0'] = serialize($orderTbl);//add session obj
-                    $this->pageRedirect("view/insertOrder.php");
-                }
             }
-        } catch (Exception $e) {
-            throw $e;
+        }catch (Exception $error) {
+            throw $error;
             $this->close_db();
         }
+    }
+
+    function console_log( $data ){
+        echo '<script>';
+        echo 'console.log('. json_encode( $data ) .')';
+        echo '</script>';
     }
     // update record
     public function updateOrder()
@@ -115,7 +112,7 @@ class orderController
                 {
                     $res = $this -> objsm ->updateRecord($orderTbl);
                     if($res){
-                        $this->list();
+                        $this->listOrder();
                     }else{
                         echo "Somthing is wrong..., try again.";
                     }

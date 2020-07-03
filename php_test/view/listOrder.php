@@ -32,7 +32,6 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header clearfix">
-                        <a href="view/insertOrder.php" class="btn btn-success pull-right">Add Order</a>
                         <h2 class="pull-left">Orders</h2>
                     </div>
                     <?php
@@ -40,7 +39,8 @@
                             echo "<table class='table table-bordered table-striped'>";
                                 echo "<thead>";
                                     echo "<tr>";
-                                        echo "<th>#</th>";
+                                        echo "<th>Order#</th>";
+                                        echo "<th>Customer#</th>";
                                         echo "<th>Purchase Date</th>";
                                         echo "<th>Country</th>";
                                         echo "<th>Device</th>";
@@ -53,6 +53,7 @@
                                 while($row = mysqli_fetch_array($result)){
                                     echo "<tr>";
                                         echo "<td>" . $row['id'] . "</td>";
+                                        echo "<td>" . $row['cId'] . "</td>";
                                         echo "<td>" . $row['purchase_Date'] . "</td>";
                                         echo "<td>" . $row['country'] . "</td>";
                                         echo "<td>" . $row['device'] . "</td>";
@@ -62,8 +63,6 @@
                                         echo "<td>";
                                         echo "<a href='index.php?act=update&id=". $row['id'] ."' title='Update Record' data-toggle='tooltip'><i class='fa fa-edit'></i></a>";
                                         echo "<a href='index.php?act=delete&id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><i class='fa fa-trash'></i></a>";
-                                        // Here should redirect to the add method from order controller, instead it deletes the customer,
-                                        // the problem is with act=delete&id, dont know how to refer to the act in the order controller + maybe have a better icon for new order
                                         echo "</td>";
                                     echo "</tr>";
                                 }
@@ -71,11 +70,13 @@
                             echo "</table>";
                             // Free result set
                             mysqli_free_result($result);
-                        } else{
+                        } else {
                             echo "<p class='lead'><em>No records were found.</em></p>";
                         }
                     ?>
                 </div>
+                <div class="page-header clearfix">
+                <a href='view/insertOrder.php?id=<?php echo $cId ;?>' class="btn btn-success pull-left">Add Order</a>
             </div>
         </div>
     </div>
