@@ -31,7 +31,7 @@ class orderController
                 $this ->listOrder();
                 break;
             default:
-                throw new \Exception('Unexpected value');
+                $this ->listOrder();
         }
     }
     // page redirection
