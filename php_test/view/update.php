@@ -45,24 +45,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="update.php">
+                        <a class="nav-link active" href="graph.php">
                             <i class="ni ni-circle-08 text-pink""></i>
-                            <span class="nav-link-text">Update Customer</span>
+                            <span class="nav-link-text">See Graph</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.php">
-                            <i class="ni ni-single-02 text-yellow"></i>
-                            <span class="nav-link-text">Profile</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="tables.html">
-                            <i class="ni ni-bullet-list-67 text-default"></i>
-                            <span class="nav-link-text">Customer Details</span>
-                        </a>
-                    </li>
-
                 </ul>
                 <!-- Divider -->
                 <hr class="my-3">
