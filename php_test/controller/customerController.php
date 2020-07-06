@@ -180,9 +180,4 @@
             $result = $this->objsm->selectRecord(0);
             include "view/list.php";
         }
-
-        public function addOrder()
-        {
-
-        }
     }

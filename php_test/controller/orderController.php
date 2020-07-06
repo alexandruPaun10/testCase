@@ -1,6 +1,6 @@
 <?php
-    require 'dataAccess/orderDAO.php';
-    require 'DTO/orderDTO.php';
+require_once 'dataAccess/orderDAO.php';
+require_once 'DTO/orderDTO.php';
 
     session_status() === PHP_SESSION_ACTIVE ? TRUE : session_start();
 

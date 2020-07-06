@@ -96,7 +96,8 @@
                                 <div class="row">
                                     <div class="col">
                                         <h5 class="card-title text-uppercase text-muted mb-0">Total Orders</h5>
-                                        <span class="h2 font-weight-bold mb-0">237</span>
+<!--                                        <a href='../controller/graphController.php?act=getCount' title='Count Orders' data-toggle='tooltip' inputmode="" ><i class='fa fa-ticket-alt'></i></a>-->
+                                        <span class="h2 font-weight-bold mb-0"><?php //echo $row[0] . " "  ?>7</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
@@ -117,8 +118,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
-                                        <span class="h2 font-weight-bold mb-0">3</span>
+                                        <h5 class="card-title text-uppercase text-muted mb-0">New orders</h5>
+                                        <span class="h2 font-weight-bold mb-0">10</span>
                                     </div>
                                     <div class="col-auto">
                                         <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
@@ -139,7 +140,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col">
-                                        <h5 class="card-title text-uppercase text-muted mb-0">Total Revenue</h5>
+                                        <h5 class="card-title text-uppercase text-muted mb-0">Last Month Revenue</h5>
                                         <span class="h2 font-weight-bold mb-0">7091,- DKK</span>
                                     </div>
                                     <div class="col-auto">
@@ -270,6 +271,8 @@
 <script src="../assets/vendor/chart.js/dist/Chart.extension.js"></script>
 <!-- Argon JS -->
 <script src="../assets/js/argon.js?v=1.2.0"></script>
+<script src="../controller/graphController.php"></script>
 </body>
 
 </html>
+}
